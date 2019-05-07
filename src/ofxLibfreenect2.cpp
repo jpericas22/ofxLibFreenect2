@@ -173,9 +173,11 @@ void ofxLibfreenect2::threadedFunction(){
 
         videoPixelsBack.setFromPixels(rgb->data, rgb->width, rgb->height, OF_PIXELS_RGBA);
         depthPixelsBack.setFromPixels((float *)depth->data, ir->width, ir->height, 1);
+        registrationPixelsBack.setFromPixels(registered.data,registered.width,registered.height,OF_PIXELS_RGBA);
 
         videoPixelsFront.swap(videoPixelsBack);
         depthPixelsFront.swap(depthPixelsBack);
+        registrationPixelsFront.swap(registrationPixelsBack);
 
   //      lock();
         bNewBuffer = true;
@@ -206,6 +208,7 @@ void ofxLibfreenect2::update(){
             //videoPixelsFront.swapRgb();
             videoPixels = videoPixelsFront;
             videoPixels.swapRgb();
+            registrationPixels = registrationPixelsFront;
             rawDepthPixels = depthPixelsFront;
             bNewBuffer = false;
         unlock();
@@ -229,6 +232,7 @@ void ofxLibfreenect2::update(){
 
         depthTex.loadData( depthPixels, GL_LUMINANCE );
         videoTex.loadData( videoPixels, GL_RGBA );
+        registrationTex.loadData(registrationPixels, GL_RGBA);
 
         bNewFrame = true;
     }
@@ -307,6 +311,16 @@ const ofPixels & ofxLibfreenect2::getDepthPixels() const{
 }
 
 //--------------------------------------------------------------------------------
+ofPixels & ofxLibfreenect2::getRegistrationPixels(){
+    return registrationPixels;
+}
+
+//--------------------------------------------------------------------------------
+const ofPixels & ofxLibfreenect2::getRegistrationPixels() const{
+    return registrationPixels;
+}
+
+//--------------------------------------------------------------------------------
 ofPixels & ofxLibfreenect2::getPixels(){
 	return videoPixels;
 }
@@ -356,6 +370,22 @@ const ofTexture& ofxLibfreenect2::getDepthTexture() const{
 		ofLogWarning("ofxLibfreenect2") << "getDepthTexture(): device " << deviceId << " depth texture not allocated";
 	}
 	return depthTex;
+}
+
+//---------------------------------------------------------------------------
+ofTexture& ofxLibfreenect2::getRegistrationTexture(){
+    if(!registrationTex.isAllocated()){
+        ofLogWarning("ofxLibfreenect2") << "getRegistrationTex(): device " << deviceId << " depth texture not allocated";
+    }
+    return depthTex;
+}
+
+//---------------------------------------------------------------------------
+const ofTexture& ofxLibfreenect2::getRegistrationTexture() const{
+    if(!registrationTex.isAllocated()){
+        ofLogWarning("ofxLibfreenect2") << "getRegistrationTex(): device " << deviceId << " depth texture not allocated";
+    }
+    return registrationTex;
 }
 
 //--------------------------------------------------------------------------------

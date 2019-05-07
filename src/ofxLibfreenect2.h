@@ -34,6 +34,9 @@ class ofxLibfreenect2 : public ofThread, public ofxBase3DVideo {
         ofPixels& getDepthPixels();
         const ofPixels& getDepthPixels() const;
 
+        ofPixels& getRegistrationPixels();
+        const ofPixels& getRegistrationPixels() const;
+
         /// (not implemented) get the distance in millimeters to a given point as a float array
         ofFloatPixels & getDistancePixels();
         const ofFloatPixels & getDistancePixels() const;
@@ -44,6 +47,9 @@ class ofxLibfreenect2 : public ofThread, public ofxBase3DVideo {
 
         ofTexture& getDepthTexture();
         const ofTexture& getDepthTexture() const;
+
+        ofTexture& getRegistrationTexture();
+        const ofTexture& getRegistrationTexture() const;
 
         bool setPixelFormat(ofPixelFormat pixelFormat);
         ofPixelFormat getPixelFormat() const;
@@ -77,6 +83,9 @@ class ofxLibfreenect2 : public ofThread, public ofxBase3DVideo {
         ofFloatPixels depthPixelsFront;
         ofFloatPixels depthPixelsBack;
         ofPixels depthPixels;
+        ofPixels registrationPixelsFront;
+        ofPixels registrationPixelsBack;
+        ofPixels registrationPixels;
         ofFloatPixels rawDepthPixels;
         ofPixelFormat pixelFormat;
 
@@ -90,6 +99,7 @@ class ofxLibfreenect2 : public ofThread, public ofxBase3DVideo {
 
         ofTexture depthTex;
         ofTexture videoTex;
+        ofTexture registrationTex;
 
         int lastFrameNo;
 

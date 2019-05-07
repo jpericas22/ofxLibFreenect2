@@ -209,6 +209,7 @@ void ofxLibfreenect2::update(){
             videoPixels = videoPixelsFront;
             videoPixels.swapRgb();
             registrationPixels = registrationPixelsFront;
+            registrationPixels.swapRgb();
             rawDepthPixels = depthPixelsFront;
             bNewBuffer = false;
         unlock();
